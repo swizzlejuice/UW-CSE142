@@ -1,0 +1,60 @@
+// Checkpoint 8, Hiring Policies
+
+import java.util.*;
+import java.io.*;
+
+public class TargetedHiring {
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner input = new Scanner(new File("hiring_info.txt"));
+        PrintStream output = new PrintStream(new File("hiring_output.txt"));
+
+        int[] counts = determineMajor(input);
+        reportStatistics(counts, output);        
+    }
+
+    public static int[] determineMajor(Scanner input) {
+        int counts[] = new int[4];
+        Scanner console = new Scanner(input.nextLine());
+        while (console.hasNext()) {
+            String level = console.next();
+            String category = console.next();
+            if (category.equals("CS")) {
+                if (level.equalsIgnoreCase("Freshman")) {
+                    counts[0]++;
+                } else if (level.equalsIgnoreCase("Sophomore")) {
+                    counts[1]++;
+                } else if (level.equalsIgnoreCase("Junior")) {
+                    counts[2]++;
+                } else if (level.equalsIgnoreCase("Senior")) {
+                    counts[3]++;
+                }
+            }
+        } return counts;
+    }
+
+    public static void reportStatistics(int[] counts, PrintStream output) {
+        int hire = 0;
+        int count = 0;
+        output.println("Freshman class has " + counts[0] + " CS Majors");
+        output.println("Sophomore class has " + counts[1] + " CS Majors");
+        output.println("Junior class has " + counts[2] + " CS Majors");
+        output.println("Senior class has " + counts[3] + " CS Majors");
+        for (int i = 0; i < counts.length; i++) {
+            if (count < counts[i]) {
+                count = counts[i];
+                hire = i;
+            } 
+        }
+        String section = "";
+        if (hire == 0) {
+            section = "Freshman";
+        } else if (hire == 1) {
+            section = "Sophomore";
+        } else if (hire == 2) {
+            section = "Junior";
+        } else if (hire == 3) {
+            section = "Senior";
+        }
+    output.println("Suggested Hire: " + section + " class");
+    }
+}
