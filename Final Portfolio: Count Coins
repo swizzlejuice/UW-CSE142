@@ -1,0 +1,32 @@
+import java.util.*;
+import java.io.*;
+public class CountCoins {
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner input1 = new Scanner(new File("input1.txt"));
+        countCoins(input1);
+
+        Scanner input2 = new Scanner(new File("input2.txt"));
+        countCoins(input2);
+    }
+
+    // needs scanner console as input to read files
+    // needs a while loop and if statements
+    // no nextLine, use Next instead
+    public static void countCoins(Scanner console) {
+        double total = 0.0;
+        while (console.hasNext()) {
+            int value = console.nextInt();
+            String coin = console.next().toLowerCase();
+            if (coin.startsWith("q")) {
+                total = total + (0.25 * value);
+            } else if (coin.startsWith("d")) {
+                total = total + (0.10 * value);
+            } else if (coin.startsWith("n")) {
+                total = total + (0.05 * value);
+            } else if (coin.startsWith("p")) {
+                total = total + (0.01 * value);
+            }
+        }
+        System.out.println("Total money: $" + total);
+    }
+}
