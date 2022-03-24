@@ -1,0 +1,113 @@
+// CSE 142
+// TA Jun Song
+// Take-Home Assessment 4
+// This program is designed to output a user's income and expenses 
+// and find their net savings/expenditures for the month
+
+import java.util.*;
+
+// contains my entire program, inluding methods and constants
+public class Budgeter {
+    public static final int DAYS_IN_MONTH = 31; 
+
+    // contains all my method calls for the program
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+        introLines(); // introductory statements describing the program
+        double income = incomeRecord(console); // income calculator
+        double expense = expenseRecord(console); // expense calculator
+        printRecord(income, expense); // displays total income and expenses
+        netCategory(income, expense); // displays net spendings/savings and category
+    }
+
+    // calculates the user's total income for the month
+    // takes parameter scanner to read user input
+    // defines variable result to calculate total income
+    // returns income
+    public static double incomeRecord(Scanner console) {
+        double result = 0;
+        System.out.print("How many categories of income? ");
+        int income = console.nextInt();
+        for (int i = 1; i <= income; i++) {
+            System.out.print("    Next income amount? $");
+            result = result + console.nextDouble();
+        }
+        System.out.println();
+        return result; // returns total income
+    }
+
+    // calculates the expenses for the month 
+    // takes a single parameter scanner to read user inputs
+    // returns monthly expenses
+    public static double expenseRecord(Scanner console) {
+        double value = 0; // if user enters monthly or one daily expenses
+        double daily = 0; // if user enters multiple daily expense categories
+        System.out.print("Enter 1) monthly or 2) daily expenses? ");
+        int expenditure = console.nextInt();
+        System.out.print("How many categories of expense? ");
+        int category = console.nextInt();
+        for (int i = 1; i <= category; i++) {
+            System.out.print("    Next expense amount? $");
+            double amount = console.nextDouble();
+            if (expenditure == 1) {
+                value = value + amount;
+            } else if (expenditure == 2) {
+            daily = daily + amount; // user might enter multiple daily expenses
+            value = daily * DAYS_IN_MONTH; // get total for the month
+            }
+        }
+        return value; // returns total monthly expenses
+    }
+
+    // rounds the output to appropriate amount of digits
+    // returns rounded value
+    public static double estimate(double num) {
+        return Math.round(num * 100) / 100.0;
+    }
+
+    // prints income and expenses based on parameters income and expense
+    // divides income and expense by number of days in the month to get 
+    // monthly income/expenses, then rounds them using round method
+    public static void printRecord(double income, double expense) {
+        double incomeAvg = income / DAYS_IN_MONTH; // income
+        double expenseAvg = expense / DAYS_IN_MONTH; // expenses
+        System.out.println();
+        System.out.println("Total income = $" + estimate(income) + " ($" + estimate(incomeAvg) + "/day)");
+        System.out.println("Total expenses = $" + estimate(expense) + " ($" + estimate(expenseAvg) + "/day)");
+    }
+
+    // prints the introductory lines at beginning of program
+    public static void introLines() {
+        System.out.print("This program asks for your monthly income and");
+        System.out.println();
+        System.out.println("expenses, then tells you your net monthly income.");
+        System.out.println();
+    }
+
+    // finds the net monthly income and tells user the category they fall into
+    // takes two parameters to reference income and expense, then 
+    // determines net savings/spending based on parameters income and expense
+    // double total refers to net savings, double totalTwo is net spendings
+    public static void netCategory(double income, double expense) {
+        double total = income - expense; // net savings
+        double totalTwo = expense - income; // net spendings
+        System.out.println();
+        if (total > 250) { // most saved
+            System.out.println("You earned $" + estimate(total) + " more than you spent this month.");
+            System.out.println("You're a big saver.");
+            System.out.println("That's some great self control! LOL."); 
+        } else if (total > 0) { // saved
+            System.out.println("You earned $" + estimate(total) + " more than you spent this month.");
+            System.out.println("You're a saver.");
+            System.out.println("That's slick."); 
+        } else if (total <= 0 && total >-250 ) { // spend > save
+            System.out.println("You spent $" + estimate(totalTwo) + " more than you earned this month.");
+            System.out.println("You're a spender.");
+            System.out.println("Nothing wrong with treating yourself once in awhile, right?!");
+        } else { // the most spent
+            System.out.println("You spent $" + estimate(totalTwo) + " more than you earned this month.");
+            System.out.println("You're a big spender.");
+            System.out.println("Oof."); 
+        }
+    }
+}
