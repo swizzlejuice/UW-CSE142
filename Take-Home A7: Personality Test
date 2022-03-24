@@ -1,0 +1,158 @@
+// CSE 142
+// TA Jun Song
+// Take-Home Assessment 7
+// This program is designed to compute a user's personality type 
+// based on a file containing several character's answers to
+// a personality test. The program asks for the file, then uses
+// the file to output a personality type for each character in the file.
+
+import java.util.*;
+import java.io.*;
+
+// my class that contains all my methods and operations
+public class Personality {
+    public static final int ARRAY = 4;
+
+    // asks for input and output file, calls methods to compute
+    // the correct personality profile
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner console = new Scanner(System.in);
+        introLines(); // introductory statement
+
+        System.out.print("input file name? "); // file: personality.txt
+        File myFile = new File(console.nextLine());
+        Scanner inputFile = new Scanner(myFile);
+
+        System.out.print("output file name? ");
+        PrintStream output = new PrintStream(console.nextLine());
+        while (inputFile.hasNextLine()) {
+            String person = inputFile.nextLine();
+            String users = inputFile.nextLine().toLowerCase();
+            int[] countingA = new int[ARRAY];
+            int[] countingB = new int[ARRAY];
+            countAB(users, countingA, countingB);
+            int[] bPercentage = bPercentage(countingA, countingB);
+            String[] personalityType = personalityType(bPercentage);
+            printResults(person, personalityType, bPercentage, output);
+        }
+    }
+
+    // introductory statements to the program
+    public static void introLines() {
+        System.out.println("This program processes a file of answers to the");
+        System.out.println("Keirsey Temperament Sorter. It converts the");
+        System.out.println("various A and B answers for each person into");
+        System.out.println("a sequence of B-percentages and then into a");
+        System.out.println("four-letter personality type.");
+        System.out.println();
+    }
+
+    // counts number of Bs in the user's response 
+    // passes string users to check for Bs 
+    public static void countingB(String users) {
+        int[] countingB = new int[ARRAY];
+        for (int i = 0; i < users.length(); i++) {
+            while (users.charAt(i) == 'B') {
+                if (i % 7 == 0) {
+                    countingB[0]++;
+                } else if (i % 7 == 1 || i % 7 == 2) {
+                    countingB[1]++;
+                } else if (i % 7 == 3 || i % 7 == 4) {
+                    countingB[2]++;
+                } else if (i % 7 == 5 || i % 7 == 6) {
+                    countingB[3]++;
+                }
+            }
+        } 
+    }
+
+    // counts number of As in the user's response 
+    // passes string users to check for As 
+    public static void countingA(String users) {
+        int[] countingA = new int[ARRAY];
+        for (int i = 0; i < users.length(); i++) {
+            while (users.charAt(i) == 'A') {
+                if (i % 7 == 0) {
+                    countingA[0]++;
+                } else if (i % 7 == 1 || i % 7 == 2) {
+                    countingA[1]++;
+                } else if (i % 7 == 3 || i % 7 == 4) {
+                    countingA[2]++;
+                } else if (i % 7 == 5 || i % 7 == 6) {
+                    countingA[3]++;
+                }
+            }
+        } 
+    }
+
+    // counts number of As and Bs in the user's response 
+    // passes string users to check for As and Bs 
+    // passes countingA and countingB arrays to count As and Bs
+    // i introduced this method to try to do it differently and see
+    // if i could get this to work
+    public static void countAB(String users, int[] countingA, int[] countingB) {
+        for (int i = 0; i < users.length(); i++) {
+            if (users.charAt(i) == 'A') {
+                countingA[(i % 7 + 1) / 2]++;
+            } else if (users.charAt(i) == 'B') {
+                countingB[(i % 7 + 1) / 2]++;
+            } 
+        }
+    }
+
+    // supposed to calculate the percentage of Bs 
+    // returns the b array to use to calculate personality type 
+    public static int[] bPercentage(int[] countingA, int[] countingB) {
+        int[] bPercentages = new int[ARRAY];
+        for (int i = 0; i < bPercentages.length; i++) {
+            double total = countingA[i] + countingB[i];
+            bPercentages[i] = (int) Math.round(countingB[i] / total) * 100;
+        } 
+        return bPercentages;   
+    }
+
+    // calculates the character's personality type
+    // passes b percentage array to calculate type
+    // returns character to decide the type
+    public static String[] personalityType(int[] bPercentage) {
+        String[] character = new String[ARRAY];
+        for (int i = 0; i <= character.length - 1; i++) {
+            if (bPercentage[i] < 50) {
+                if (i == 0) {
+                    character[0] = "E";
+                } else if (i == 1) {
+                    character[1] = "S";
+                } else if (i == 2) {
+                    character[2] = "T";
+                } else if (i == 3) {
+                    character[3] = "J";
+                }
+            } else if (bPercentage[i] > 50) {
+                if (i == 0) {
+                    character[0] = "I";
+                } else if (i == 1) {
+                    character[1] = "N";
+                } else if (i == 2) {
+                    character[2] = "F";
+                } else if (i == 3) {
+                    character[3] = "P";
+                }
+            } else {
+                character[i] = "-";
+            }
+        } 
+        return character;
+    } 
+
+    // prints the final results and type of the character from file
+    // take parameters to properly calculate final profile
+    public static void printResults(String person, String[] personalityType, int[] bPercentage, PrintStream output) {
+        System.out.println();
+        output.println(person + ": " + Arrays.toString(bPercentage) + " = ");
+        for (int i = 0; i < personalityType.length; i++) {
+            String print = personalityType[i];
+            output.print(print); // prints personality type
+        }
+    
+    }   
+}
