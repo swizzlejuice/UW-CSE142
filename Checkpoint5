@@ -1,0 +1,23 @@
+// Checkpoint 5, Random Star
+
+import java.util.*;
+public class RandomStar {
+    public static void main(String[] args) {
+        Random r = new Random(2063064142);
+        randomStar(r, 12);
+        
+        System.out.println();
+        randomStar(r, 19);
+    }
+    
+    public static void randomStar(Random r, int num) {
+        int figure = 0;
+        while (figure != num) {
+            figure = r.nextInt(15) + 5;
+            for (int value = 0; value < figure; value++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+    }
+}
