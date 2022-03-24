@@ -1,0 +1,20 @@
+// Checkpoint 3, reverseGreeting
+
+import java.util.*;
+
+public class ReverseGreeting {
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+        reverseGreeting(console);
+    }
+    public static void reverseGreeting(Scanner console) {
+        System.out.print("First name? ");
+        String firstName = console.next();
+        System.out.print("Last name? ");
+        String lastName = console.next();
+        String greeting = "\nNice to meet you, " + firstName + " " + lastName;
+        for (int back = greeting.length() - 1; back >= 0; back--) {
+            System.out.print(greeting.charAt(back));
+        }
+    }  
+}
