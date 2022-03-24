@@ -1,0 +1,23 @@
+// Checkpoint 4, Print GPA
+
+import java.util.*;
+public class PrintGPA {
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+        printGPA(console);
+    }
+    public static void printGPA(Scanner console) {
+        double sum = 0;
+        System.out.print("Enter the number of courses: ");
+        int number = console.nextInt();
+        for (int j = 1; j <= number; j++) {
+            System.out.print("    Course " + j + " Grade: ");
+            int input = console.nextInt(); 
+            sum = sum + input;
+        }
+        double average = sum / number;
+        System.out.print("Average grade is " + average); 
+        System.out.println();
+    }
+}
+    
