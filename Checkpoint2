@@ -1,0 +1,24 @@
+// Checkpoint 2, Dollar Figure 
+
+public class DollarFigure {
+    public static void main(String[] args) {
+        for (int number = 1; number <= 7; number++) {
+            for (int c = 1; c < number; c++) {
+                System.out.print("**");
+            }
+            for (int c = 1; c <= -number + 8; c++) {
+                System.out.print("$");
+            }
+            for (int c = 1; c <= -2 * (number - 8); c++) {
+                System.out.print("*");
+            }
+            for (int c = 1; c <= -number + 8; c++) {
+                System.out.print("$");
+            }
+            for (int c = 1; c < number; c++) {
+                System.out.print("**");
+            }
+            System.out.println();
+        }
+    }
+}
