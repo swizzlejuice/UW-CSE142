@@ -1,0 +1,35 @@
+import java.util.*;
+import java.awt.*;
+
+public class Lion extends Critter {
+    private int value;
+    private Random rando; // to generate random color 
+
+    public Lion() {
+        this.value = 0;
+        this.rando = new Random();
+    }
+
+    public String toString() {
+        return "L";
+    }
+
+    // wasn't sure how to do color method...i tried assigning 1,2,3 to 
+    // red, blue, green and random.nextInt(3) + 1...
+    //public Color getColor() {
+        //int color = 0;
+    //}
+    // decides actions critter should take based on 
+    // neighboring critters
+    public Action getMove(CritterInfo info) {
+        if (info.getFront() == Neighbor.SAME) {
+            return Action.RIGHT;
+        } else if (info.getFront() == Neighbor.OTHER) {
+            return Action.INFECT; 
+        } else if (info.getFront() == Neighbor.WALL || info.getRight() == Neighbor.WALL) {
+            return Action.LEFT; 
+        } else {
+            return Action.HOP;
+        }
+    }
+}
