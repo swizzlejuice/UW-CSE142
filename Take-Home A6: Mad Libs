@@ -1,0 +1,118 @@
+// CSE 142
+// TA Jun Song
+// Take-Home Assessment 6
+// This program allows a user to create a mad lib 
+// by answering a series of prompts. the program then allows
+// the user to view the mad lib they created, create another one,
+// or quit the game.
+
+import java.io.*;
+import java.util.*;
+
+// class that contains all my methods and variables used in the program
+public class MadLibs {
+
+    // introduces a scanner to read user input
+    // uses boolean variable to allow user to play multiple
+    // games and choose if they want to quit, view, or create mad lib
+    public static void main(String [] args) throws FileNotFoundException {
+        Scanner console = new Scanner(System.in);
+        boolean games = true; // whether or not the user wants to view and create, or quit
+        introLines(); // prints intro to the game
+        while (games == true) { 
+        // the menu of options will continue to be shown until user quits
+            System.out.print("(C)reate mad-lib, (V)iew mad-lib, (Q)uit? ");
+            String decision = console.nextLine();
+            if (decision.equalsIgnoreCase("Q")) { // if user wants to quit
+                games = false; // game will end
+            } else if (decision.equalsIgnoreCase("C")) { // if user wants to create madlib
+                createLib(console); // calls method to create mad lib and prompt user input
+            } else if (decision.equalsIgnoreCase("V")) { // if user wants to see madlib
+                viewLib(console); // calls method to view mad lib 
+            }
+        } 
+        System.out.println();
+    }
+
+    // intro statement describing what the game does for the user
+    public static void introLines() {
+        System.out.println("Welcome to the game of Mad Libs.");
+        System.out.println("I will ask you to provide various words");
+        System.out.println("and phrases to fill in a story.");
+        System.out.println("The result will be written to an output file.");
+        System.out.println();
+    }
+
+    // prompts user to input a file and will check if the file exists
+    // if it does not, program will continue to prompt user until it can find file
+    // takes parameter console to read user input
+    // returns parameter file so it can be called in other methods 
+    public static File inputFile(Scanner console) throws FileNotFoundException {
+        System.out.print("Input file name: ");
+        String myFile = console.nextLine();
+        File file = new File(myFile);
+        while (!file.exists()) { // if file does not exist
+            System.out.print("File not found. Try again: ");
+            myFile = console.nextLine();
+            file = new File(myFile);
+        }
+        return file; // returns file to be referenced later
+    }
+
+    // creates the output file based on user input
+    // prompts user to input words to create mad lib
+    // calls parameter console to read user input 
+    // input file is passed as the input file found in inputFile method
+    public static void createLib(Scanner console) throws FileNotFoundException {
+        Scanner userInput = new Scanner(inputFile(console));
+        System.out.print("Output file name: ");
+        String outputName = console.nextLine();
+        PrintStream output = new PrintStream(outputName);
+        System.out.println();
+        while (userInput.hasNextLine()) {
+            String words = userInput.nextLine();
+            Scanner line = new Scanner(words); // scans lines
+            while (line.hasNext()) { // if there are other objects in file
+                String token = line.next();
+                if (token.startsWith("<") && token.endsWith(">")) { // replaces placeholders
+                    token = token.substring(1);
+                    token = token.substring(0, token.length() - 1);
+                    token = token.replace('-', ' '); // replaces hyphens with spaces
+                    String option = ""; // to decide whether to put a or an
+                    char indexZero = token.charAt(0); // checks initial index of character
+                    if (indexZero == 'a' || indexZero == 'A' // if character starts with a vowel
+                        || indexZero == 'e' || indexZero == 'E'
+                        || indexZero == 'i' || indexZero == 'I'
+                        || indexZero == 'o' || indexZero == 'O'
+                        || indexZero == 'u' || indexZero == 'U') {
+                            option = "an"; // use an
+                    } else {
+                        option = "a"; // use a
+                    }
+                    System.out.print("Please type " + option + " " + token + ": "); 
+                    // prompts user for input
+                    String printer = console.nextLine();
+                    output.print(printer + " ");
+                } else {
+                    output.print(token + " ");
+                }
+            } 
+            output.println();
+        }
+        System.out.println("Your mad-lib has been created!");
+        System.out.println();
+    }
+
+    // allows user to view the mad lib they created in output file
+    // takes parameter console to read user input
+    public static void viewLib(Scanner console) throws FileNotFoundException {
+        Scanner userInput = new Scanner(inputFile(console));
+        System.out.println();   
+        while (userInput.hasNextLine()) {
+            String words = userInput.nextLine();
+            System.out.println(words);
+        } 
+        System.out.println();
+    }
+}
+   
