@@ -1,0 +1,39 @@
+// CSE 142, TA Jun Song
+// Take Home Assessment 2, ASCII Art 
+
+// The purpose of this main is to call on the methods below
+public class AsciiArt {
+    public static void main(String[] args) {
+        baseTop();
+        moonRidges();
+        bottomPart();
+        lastLines();
+    }
+    // This method uses a for loop to output the stars in the sky
+    public static void baseTop() {
+        for (int star = 1; star <= 5; star++) {
+            System.out.println(" * * * * * * * * *");
+        }
+        System.out.println("     _");
+    }
+    // This draws the curves of the crescent moon
+    public static void moonRidges() {
+        System.out.println("  < >");
+        for (int dash = 1; dash <= 3; dash++) {
+            System.out.println("/~/");
+            }
+    }
+    // This draws the very bottom part of the moon
+    public static void bottomPart() {
+        for (int round = 1; round <= 2; round++) {
+            for (int second = 1; second <= round - 1; second++) {
+                System.out.println(" \\ >");
+            }
+        }
+    }  
+    // This draws the bottom of the moon and my message!
+    public static void lastLines() {
+        System.out.println("   > > _");
+        System.out.println("A crescent moon and stars!");
+    } 
+}
