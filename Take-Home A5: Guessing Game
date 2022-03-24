@@ -1,0 +1,100 @@
+// TA Jun Song
+// Take-Home Assessment 5
+// This program is a guessing game where the user inputs 
+// numbers until they guess the correct answer
+// the program will display total stats for the total games played
+
+import java.util.*;
+
+// contains all methods and variables used in the program
+public class GuessingGame {
+    public static final int MAX_VALUE = 100;
+
+    // contains my custom intro, multiple game feature, and stats method
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in); 
+        Random numbers = new Random();
+        
+        int tries = 0; // total tries
+        int games = 1; // total games
+        int highest = 1000000; // assuming no game requires a million guesses
+        boolean playAgain = true; // allows player to play multiple games
+        
+        introLines(); // prints my custom haiku intro
+
+        while (playAgain) { // if the player wants to play again
+            int playGameAgain = singleGame(console, numbers, playAgain); // call game 
+            tries = tries + playGameAgain; // add tries to previous round to get total tries
+            if (playGameAgain < highest) { 
+                highest = playGameAgain;
+            }  
+            System.out.println();
+            System.out.print("Do you want to play again? ");
+            String playerChoice = console.next();
+            if (playerChoice.startsWith("y") || playerChoice.startsWith("Y")) {
+                games++; // adds 1 to number of games played
+            } else {
+                playAgain = false; // do not play again 
+            } 
+        }  
+        gameStats(games, tries, highest); // prints stats for the games
+    }
+
+    // my custom haiku intro for the program
+    public static void introLines() {
+        System.out.println("Here's a guessing game");
+        System.out.println("The number I'm thinking of");
+        System.out.println("See if you can guess!");
+    }
+
+    // plays a single guessing game 
+    // takes parameter console to read user input
+    // parameter random numbers to generate the random number 
+    // playAgain is called so that while the game is playing, the loop will prompt
+    // player to continue guesses until the correct answer is achieved
+    // returns total amount of tries for the single game
+    public static int singleGame(Scanner console, Random numbers, boolean playAgain) {
+        System.out.println();
+        System.out.println("I'm thinking of a number between 1 and " + MAX_VALUE + "...");
+        int count = numbers.nextInt(MAX_VALUE) + 1;
+        int numberCount = 0; // the amount of guesses from user
+        while (playAgain) {
+            System.out.print("Your guess? ");
+            int userGuess = console.nextInt();
+            numberCount++; // number of tries increases
+            if (userGuess < count){
+                System.out.println("It's higher.");
+            } else if (userGuess > count) {
+                System.out.println("It's lower.");
+            } else if (numberCount == 1) {
+                System.out.print("You got it right in " + numberCount + " guess!");
+                playAgain = false; 
+                // game will end, the loop in main will ask if user wants to play again
+            } else {
+                System.out.print("You got it right in " + numberCount + " guesses!");
+                playAgain = false;
+            } 
+        } 
+        return numberCount; // returns the total amount of tries for the game
+    }
+
+    // this prints the stats for all games played
+    // calls parameters for total games, tries, and lowest amount of guesses for games
+    public static void gameStats(int games, int tries, int highest) {
+        System.out.println();
+        System.out.println("Overall results:");
+        System.out.println("Total games   = " + games);
+        System.out.println("Total guesses = " + tries);
+        double average = (tries + 0.0)/games; // to bypass the int division problem
+        double averageGame = gameRounder(average); // prints answer as accurate decimal
+        System.out.println("Guesses/game  = " + averageGame); // accurate average
+        System.out.println("Best game     = " + highest); // best game stat
+    }
+
+    // calculates the accurate decimal
+    // returns the precise decimal answer to the nearest tenth
+    public static double gameRounder(double number) {
+        double accurateResult = Math.round(number * 10.0) / 10.0;
+        return accurateResult;
+    }
+}
