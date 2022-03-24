@@ -1,0 +1,29 @@
+import java.util.*;
+public class CountVotesFor {
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+        countVotesFor("Brett", console);
+        countVotesFor("ana", console);
+    }
+
+    public static double countVotesFor(String candidate, Scanner console) {
+        double candidateVotes = 0;
+        int totalVotes = 0;
+        int noVotes = 0;
+        System.out.print("Candidate? ");
+        String vote = console.next();
+        while (!vote.equalsIgnoreCase("done")) {
+            if (vote.equalsIgnoreCase(candidate)) {
+                candidateVotes++;
+            } else if (vote.equalsIgnoreCase("done")) {
+                noVotes++;
+            }
+            totalVotes++;
+            System.out.print("Candidate? ");
+            vote = console.next();
+        }
+        double percentage = candidateVotes/totalVotes * 100;
+        System.out.println(candidate + " received " + percentage + " of the " + totalVotes + " votes cast.");
+        return percentage;
+    }
+}
