@@ -1,0 +1,119 @@
+// CSE 142
+// TA Jun Song
+// Take-Home Assessment 1
+// This program is designed to reduce redundancies for
+// "There was an Old Woman" and print out the entire song
+
+// This class calls all methods used in this program
+// and prints blank lines when needed
+public class Song {
+    public static void main(String[] args) {
+      verseFly();  
+      System.out.println();
+      verseSpider();
+      System.out.println();
+      verseBird();
+      System.out.println();
+      verseCat();
+      System.out.println();
+      verseDog();
+      System.out.println();
+      customVerse();
+      System.out.println();
+      finalVerse();
+    }
+
+    // prints the first three lines of the song
+    // calls method swallowFly to print second and third lines
+    public static void verseFly() {
+        System.out.println("There was an old woman who swallowed a fly.");
+        swallowFly();
+    }
+
+    // prints the second paragraph of the song
+    // calls method swallowSpider to print last three lines of paragraph two
+    public static void verseSpider() {
+        System.out.println("There was an old woman who swallowed a spider,");
+        System.out.println("That wriggled and iggled and jiggled inside her.");
+        swallowSpider();
+    }
+
+    // prints the third paragraph of the song
+    // calls method swallowBird to print last four lines of paragraph three
+    public static void verseBird() {
+        System.out.println("There was an old woman who swallowed a bird,");
+        System.out.println("How absurd to swallow a bird.");
+        swallowBird();
+    }
+
+    // prints the fourth paragraph of the song
+    // calls method swallowCat to print last five lines of paragraph four
+    public static void verseCat() {
+        System.out.println("There was an old woman who swallowed a cat,");
+        System.out.println("Imagine that to swallow a cat.");
+        swallowCat();
+    }
+
+    // prints the fifth paragraph of the song
+    // calls method swallowDog to print last six lines of paragraph five
+    public static void verseDog() {
+        System.out.println("There was an old woman who swallowed a dog,");
+        System.out.println("What a hog to swallow a dog.");
+        swallowDog();
+    }
+
+    // prints last two lines of every paragraph of the song
+    public static void swallowFly() {
+        System.out.println("I don't know why she swallowed that fly,");
+        System.out.println("Perhaps she'll die.");
+    }
+
+    // prints the verse where the woman swallows the spider
+    // then calls method where woman swallows the fly
+    public static void swallowSpider() {
+        System.out.println("She swallowed the spider to catch the fly,");
+        swallowFly();
+    }
+
+    // prints verse where the woman swallows the bird, then spider
+    // then calls method where woman swallows the fly
+    public static void swallowBird() {
+        System.out.println("She swallowed the bird to catch the spider,");
+        swallowSpider();
+    }
+
+    // prints verse where the woman swallows cat, then bird, then spider
+    // then finally, the fly
+    public static void swallowCat() {
+        System.out.println("She swallowed the cat to catch the bird,");
+        swallowBird();
+    }
+
+    // prints verse where the woman swallows the dog, then cat
+    // then the bird, spider, then fly
+    public static void swallowDog() {
+        System.out.println("She swallowed the dog to catch the cat,");
+        swallowCat();
+    }
+
+    // prints my custom verse about the chimp and 
+    // then when chimp is swallowed
+    public static void customVerse() {
+        System.out.println("There was an old woman who swallowed a chimp,");
+        System.out.println("What a wimp to swallow a chimp.");
+        swallowCustomVerse();
+    }
+
+    // my custom verse where the chimp is swallowed to catch dog
+    // then all the other animals
+    public static void swallowCustomVerse() {
+        System.out.println("She swallowed the chimp to catch the dog,");
+        swallowDog();
+    }
+
+    // prints the final verse (last two lines) of song
+    public static void finalVerse() {
+        System.out.println("There was an old woman who swallowed a horse,");
+        System.out.println("She died of course.");
+    }
+}
