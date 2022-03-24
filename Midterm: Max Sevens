@@ -1,0 +1,30 @@
+import java.util.*;
+public class MaxSevens {
+    public static void main(String[] args) {
+        Random rand = new Random();
+        maxSevens(rand, 10);
+        maxSevens(rand, 10);
+        maxSevens(rand, 5);
+        maxSevens(rand, 8);
+        maxSevens(rand, 8);
+        maxSevens(rand, 3);
+    }
+
+    public static void maxSevens(Random rand, int number) {
+        int track = 0;
+        int sevens = 0;
+        for (int i = 0; i < number; i++) {
+            int num = rand.nextInt(11);
+            System.out.print(num + " ");
+            if (num == 7) {
+                track++;
+                sevens = Math.max(track, sevens);
+            } else {
+                track = 0;
+            }
+        } 
+        System.out.println();
+        System.out.println("Run of " + sevens + " sevens in " + number + " tries.");
+    } 
+    
+}
