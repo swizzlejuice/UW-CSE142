@@ -1,0 +1,85 @@
+// CSE 142, TA Jun Song
+// Take Home Assessment 2 
+// This program is designed to draw the Space Needle with different
+// possible sizes 
+
+// This contains my methods and my main, which calls my methods.
+public class SpaceNeedle {
+    public static final int SIZE = 4; 
+    public static void main(String [] args) {
+        doubleLines(); 
+        domeShape();
+        pyramidShape();
+        doubleLines();
+        middlePart();
+        domeShape();
+    }
+
+    // Prints the parallel lines at top and middle of space needle 
+    public static void doubleLines() {
+        for (int j = 1; j <= SIZE; j++) {
+            for (int k = 1; k <= SIZE * 3; k++) {
+                System.out.print(" "); 
+            }
+            System.out.println("||");
+        }
+    }
+
+    // Prints the pyramid shape of the space needle towards top
+    // also prints flooring of space needle (the quotation marks)
+    public static void domeShape() {
+        for (int i = 1; i <= SIZE; i++)  {
+            for (int blank = 1; blank <= (SIZE * 3)- (i * 3); blank++) {
+                System.out.print(" ");
+            }
+            System.out.print("__/");
+            for (int c = 1; c <= i * 3 - 3; c++) {
+                System.out.print(":");
+            }
+            System.out.print("||");
+            for (int c = 1; c <= i * 3 - 3; c++) {
+                System.out.print(":");
+            }
+            System.out.println("\\__");
+        }
+        // creates flooring of space needle
+        System.out.print("|");
+        for (int j = 1; j <= SIZE * 6; j++) {
+            System.out.print("\"");
+        }
+        System.out.println("|");
+    } 
+
+    // This creates the the upside-down pyramid shape in dome of
+    // the space needle (the slashes)
+    public static void pyramidShape(){
+        for (int s = 1; s <= SIZE; s++) {
+            for (int f = 1; f <= s * 2 - 2; f++) {
+                System.out.print(" ");
+            }
+            System.out.print("\\_");
+            for (int v = 1; v <= (SIZE * 3) - (2 * s) + 1; v++) {
+                System.out.print("/\\");
+            }
+            System.out.println("_/");
+        }
+    }  
+
+    // This creates the narrow middle of space needle
+    public static void middlePart() {
+        for (int m = 1; m <= SIZE * SIZE; m++) {
+            for (int a = 1; a <= SIZE * 2 + 1; a++) {
+                System.out.print(" ");
+            }
+            System.out.print("|");
+            for (int y = 1; y <= SIZE - 2; y++) {
+                System.out.print("%");
+            }
+            System.out.print("||");
+            for (int y = 1; y <= SIZE - 2; y++) {
+                System.out.print("%");
+            }
+            System.out.println("|");
+        }
+    } 
+}
