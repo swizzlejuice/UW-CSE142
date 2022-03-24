@@ -1,0 +1,35 @@
+import java.util.*;
+import java.io.*;
+public class ProcessScores {
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner input1 = new Scanner(new File("input1.txt"));
+        processScores(input1);
+
+        Scanner input2 = new Scanner(new File("input2.txt"));
+        processScores(input2);
+
+        Scanner input3 = new Scanner(new File("input3.txt"));
+        processScores(input3);        
+    }
+
+    public static void processScores(Scanner console) {
+        while (console.hasNextLine()) {
+            String name = console.nextLine();
+            String score = console.nextLine();
+
+            int pluses = 0;
+            double amount = 0;
+            
+            for (int i = 0; i < score.length(); i++) {
+                if (score.charAt(i) == '+') {
+                    pluses++;
+                    amount++;
+                } else {
+                    amount++;
+                }
+            }
+            double average = 100.0 * (pluses/amount);
+            System.out.println(name + ": " + average + "% plus");
+        }
+    }
+}
