@@ -1,0 +1,73 @@
+// CSE 142
+// TA: Jun Song
+// Take-home Assessment 3
+// This program will encrypt user input based on the Caesar Cipher and the
+// key cseonefortytwo
+
+import java.util.*;
+
+// contains the methods and constants used to create this program
+public class EncryptionMachine {
+    public static final int SHIFT = 3;
+    public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+    
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+        prompter(console);
+    }
+
+    // cycles thru words entered by the user and calls the 
+    // letterEncryptor method to encrypt the words
+    // takes parameter str to output correct encryption
+    public static void wordEncryptor(String str) {
+        System.out.print("    " + "\"" + str + "\"" + " has been encrypted to: ");
+        for (int line = 0; line < str.length(); line++) {
+            letterEncryptor(str.charAt(line));
+        }
+    }
+
+    // encrypts the letters entered by the user
+    // takes parameter letter to be stored in plaintext int
+    // outputs encrypted character
+    public static void letterEncryptor(char letter) {  
+        int regular = ALPHABET.indexOf(letter);       
+        int formula = (ALPHABET.length() + SHIFT) % ALPHABET.length();
+        String cipher = ALPHABET.substring(formula) + ALPHABET.substring(0, formula);
+        // prints ciphered character
+        char character = cipher.charAt(regular); 
+        System.out.print(character); 
+    }
+
+    // attempts to eliminate redundancy and achieve 
+    // readability by grouping the print statements 
+    public static void introLines() {
+        System.out.println("Welcome to the CSE142 Encryption Machine!");
+        System.out.println("The program lets you encrypt a message");
+        System.out.println("with a key so your recipient can decrypt.");
+        System.out.println();
+        System.out.println("Encrypted messages use a shared keyword to decrypt.");
+        System.out.print("  Enter key: ");
+    }
+
+    // primary method used in my main to encrypt user input
+    // and prompt the user to input statements
+    public static void prompter(Scanner console) {
+        introLines();
+        String ALPHABET = console.next();
+        wordEncryptor(ALPHABET);
+        System.out.println();
+        System.out.println();
+        System.out.print("How many words are in your message? ");
+        int range = console.nextInt();
+        // cycles thru words entered by user and encrypts them 
+        for(int word = 0; word < range; word++) {
+            System.out.print("  Next word: ");
+            ALPHABET = console.next();
+            wordEncryptor(ALPHABET);
+            System.out.println();
+        }
+        // prints final message after for loop
+        System.out.println();
+        System.out.println("Message fully encrypted. Happy secret messaging!");      
+    }
+}
