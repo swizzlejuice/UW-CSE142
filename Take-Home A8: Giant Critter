@@ -1,0 +1,22 @@
+import java.util.*;
+import java.awt.*;
+
+public class Giant extends Critter {
+    private int count;
+
+    // for the color of the giant
+    public Color getColor() {
+        return Color.GRAY;
+    }
+
+    // decides what actions to take
+    public Action getMove(CritterInfo info) {
+        if (info.getFront() == Neighbor.EMPTY) {
+            return Action.HOP;
+        } else if (info.getFront() == Neighbor.OTHER) {
+            return Action.INFECT; 
+        } else {
+            return Action.RIGHT;
+        }
+    }
+}
