@@ -1,0 +1,43 @@
+import java.util.*;
+import java.awt.*;
+
+public class Bear extends Critter {
+    private int value;
+    private boolean polar; // color of bear
+
+    public Bear(boolean polar) {
+        this.value = 0;
+        this.polar = polar;
+    }
+
+    // decides the if bear is white or black
+    public Color getColor() {
+        if (polar) {
+            return Color.WHITE;
+        } else {
+            return Color.BLACK;
+        }
+    }
+
+    // switches between the moves of / or \
+    // returns String value
+    public String toString() {
+        if (value % 2 == 0) {
+            return "/";
+        } else {
+            return "\\";
+        }
+    }
+
+    // decides the action the critter should take
+    public Action getMove(CritterInfo info) {
+        value++;
+        if (info.getFront() == Neighbor.OTHER) {
+            return Action.INFECT;
+        } else if (info.getFront() == Neighbor.EMPTY) {
+            return Action.HOP; 
+        } else {
+            return Action.LEFT;
+        }
+    }
+}
